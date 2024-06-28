@@ -20,7 +20,8 @@ void print (List *l);
 void destroy (List *l);
 List* insert_front (List *l, int val);
 List* insert_back (List *l, int val);
-List* removek (List *l, int val);
-List* search (List *l, int k);
+List* remove_value (List *l, int val);
+List* remove_k (List *l, int k);
+List* search (List *l, int val);
 
 #endif

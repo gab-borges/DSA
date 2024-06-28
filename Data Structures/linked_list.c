@@ -48,5 +48,45 @@ List* insert_back (List *l, int val) {
 	return (l);
 }
 
-List* removek (List *l, int val);
-List* search (List *l, int k);
+/* */
+List* remove_value (List *l, int val) {
+	//TODO
+}
+
+/* */
+List* remove_k (List *l, int k) {
+	if (l == NULL)
+		return (NULL);
+	
+	if (k == 0) {
+		List *result = l->next;
+		
+		free (l);
+		
+		return (result);
+	}
+
+	int cont = 0;
+	List *prev = l;
+
+	List *t;
+	for (t = l; t != NULL; prev = t, t = t->next, cont++) {
+		if (cont == k) {
+			prev->next = t->next;
+			free (t);
+			break;
+		}
+	}
+
+	return (l);
+}
+
+/* */
+List* search (List *l, int val) {
+	List *t;
+	for (t = l; t != NULL; t = t->next)
+		if (t->data == val)
+			return (t);
+
+	return (NULL);
+}
