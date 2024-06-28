@@ -1,5 +1,5 @@
-#ifndef __algo_c__
-#define __algo_c__
+#ifndef _algo_h_
+#define _algo_h_
 
 #include <stdio.h>
 #include <stdlib.h>
