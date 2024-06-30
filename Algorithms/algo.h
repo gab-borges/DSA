@@ -24,8 +24,8 @@ int check (int *A, int n, int ascending);
 void bubble_sort (int *A, int n);
 void selection_sort (int *A, int n);
 void insertion_sort (int *A, int n);
+void quick_sort (int *A, int left, int right);
 
-//void quick_sort (int *A, int left, int right);
 //void merge_sort (int *A, int left, int right, int *O);
 
 #endif

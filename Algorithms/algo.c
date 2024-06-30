@@ -10,6 +10,7 @@ void bubble_sort (int *A, int n) {
 				swap (A, j, j + 1);
 }
 
+/* */
 void selection_sort (int *A, int n) {
   int i, j, min;
 
@@ -24,6 +25,7 @@ void selection_sort (int *A, int n) {
   }
 }
 
+/* */
 void insertion_sort (int *A, int n) {
   int i, j, key;
 
@@ -37,7 +39,6 @@ void insertion_sort (int *A, int n) {
   }
 }
 
-
 /* */
 void swap (int *A, int i, int j) {
 	int aux = A[i];
@@ -45,6 +46,30 @@ void swap (int *A, int i, int j) {
 	A[j] = aux;
 }
 
+/* */
+int partition (int *A, int left, int right) {
+  int pivot = A[right];
+
+  int j, i = left - 1;
+  for (j = left; j < right; j++)
+    if (A[j] <= pivot)
+      swap (A, ++i, j);
+
+  swap (A, ++i, right);
+  return (i);
+}
+
+/* */
+void quick_sort (int *A, int left, int right) {
+  if (left < right) {
+    int pivot = partition (A, left, right);
+
+    quick_sort (A, left, pivot - 1);
+    quick_sort (A, pivot + 1, right);
+  }
+}
+
+/* */
 void print (int *A, int n) {
 	int i;
 	for (i = 0; i < n; i++)
