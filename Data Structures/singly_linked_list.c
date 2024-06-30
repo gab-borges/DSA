@@ -1,4 +1,4 @@
-#include "linked_list.h"
+#include "singly_linked_list.h"
 
 /* */
 List* create () {
@@ -50,7 +50,23 @@ List* insert_back (List *l, int val) {
 
 /* */
 List* remove_value (List *l, int val) {
-	//TODO
+	if (l == NULL)
+		return (NULL);
+
+	if (l->data == val) {
+		List *result = l->next;
+		free (l);
+		return (result);
+	}
+
+	List *t, *prev = l;
+	for (t = l; t != NULL; prev = t, t = t->next)
+		if (t->data == val) {
+			prev->next = t->next;
+			free (t);
+		}
+	
+	return (l);
 }
 
 /* */
