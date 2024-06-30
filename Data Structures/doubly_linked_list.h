@@ -1,6 +1,8 @@
 #ifndef _doubly_linked_list_h_
 #define _doubly_linked_list_h_
 
+/* Doubly Linked List */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>

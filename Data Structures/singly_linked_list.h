@@ -1,6 +1,8 @@
 #ifndef _singly_linked_list_h_
 #define _singly_linked_list_h_
 
+/* Singly Linked List */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -8,7 +10,6 @@
 #define TRUE 1
 #define FALSE 0
 
-// Singly Linked List
 typedef struct node {
   int data;
   struct node *next;
