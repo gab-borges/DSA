@@ -4,8 +4,8 @@
 	*	Adjacency List representation.
 	*
 	*	Considering 'V' as the number of vertices, and 'E' as 
-  * the number of edges, the complexities to initialize the
-  * graph are:
+  *	the number of edges, the complexities to initialize the
+  *	graph are:
 	*	Time Complexity: O(V+E)
 	*	Space Complexity: O(V+E) 
 */
@@ -24,9 +24,7 @@ class Graph {
 	public:
 		// Adds an edge with weight 'w', from 'u' to 'v'
 		void add_edge(int u, int v, int w) {
-			pair<int, int> p(v, w);
-			
-			adj_list[u].push_back(p);
+			adj_list[u].push_back({v, w});
 		}
 
 		// Prints the adjacency list
