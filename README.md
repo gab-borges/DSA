@@ -1,11 +1,14 @@
 # DSA
 
-Implementations related to Data Structures and Algorithms, using the C programming language.
+Implementations related to Data Structures and Algorithms.
+
+Made using the C and C++ programming languages.
 
 
 ## Features
 - Sorting Algorithms, its variations and pre-made tests.
 - Basic Data Structures, such as linked lists, stacks, queues and hash tables.
+- Graph implementations
 
-## Ideas
-- Graphs implementations and its algorithms, such as BFS, DFS, Dijkstra, Bellman-Ford, Floyd-Warshall.
+## Ideas 
+- Graph algorithms, such as BFS, DFS, Dijkstra, Bellman-Ford, Floyd-Warshall.
