@@ -4,8 +4,8 @@
 	*	Adjacency List representation.
 	*
 	*	Considering 'V' as the number of vertices, and 'E' as 
-  *	the number of edges, the complexities to initialize the
-  *	graph are:
+	*	the number of edges, the complexities to initialize the
+	*	graph are:
 	*	Time Complexity: O(V+E)
 	*	Space Complexity: O(V+E) 
 */
