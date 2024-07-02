@@ -1,26 +1,28 @@
-#include <iostream>
-#include <vector>
-using namespace std;
 
 /*
 	*	Implementation of a directed weighted Graph using the
 	*	Adjacency Matrix representation.
 	*
-	* Considering V as the number of vertices, the complexities
+	*	Considering V as the number of vertices, the complexities
 	*	to initialize the graph are:
-	* Time Complexity: O(V²)
+	*	Time Complexity: O(V²)
 	*	Space Complexity: O(V²) 
 */
 
+#include <iostream>
+#include <vector>
+using namespace std;
+
+
 class Graph {
 	private:
-		vector<vector<int> > adj_matrix;
-		int	num_vertices;
+		vector<vector<int>> adj_matrix;
+		int num_vertices;
 
 	public:
 		// Initializes the matrix filled with zeros of a graph with 'n' nodes.
 		Graph(int n) {
-			adj_matrix = vector<vector<int> >(n, vector<int>(n, 0));
+			adj_matrix = vector<vector<int>>(n, vector<int>(n, 0));
 		}
 
 		// Adds an edge with weight 'w', from 'u' to 'v'
@@ -32,8 +34,8 @@ class Graph {
 		void print() {
 			for (int i = 0; i < num_vertices; i++) {
 				for (int j = 0; j < num_vertices; j++)
-					std::cout << adj_matrix[i][j] << " ";
-				std::cout << "\n";
+					cout << adj_matrix[i][j] << " ";
+				cout << endl;
 			}
 		}
 };
