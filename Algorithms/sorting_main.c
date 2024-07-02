@@ -1,4 +1,4 @@
-#include "algo.h"
+#include "sorting.h"
 
 int main() {
   int n;
@@ -6,7 +6,7 @@ int main() {
   printf("\t\tBubble\t\tSelection\tInsertion\n");
 
   for (n = 10; n <= 10000; n*=10) {
-    int *A = (int*) malloc (n * sizeof(int));
+  	int *A = (int*) malloc (n * sizeof(int));
     int *B = (int*) malloc (n * sizeof(int));
     int *C = (int*) malloc (n * sizeof(int));
 

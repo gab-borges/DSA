@@ -1,4 +1,4 @@
-#include "algo.h"
+#include "sorting.h"
 
 /* */
 void bubble_sort (int *A, int n) {
