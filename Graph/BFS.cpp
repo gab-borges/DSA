@@ -12,11 +12,12 @@
 
 #include <iostream>
 #include <vector>
+#include <list>
 #include <queue>
 using namespace std;
 
 /* */
-void bfs(vector<vector<int> >& adjList, int startNode, vector<bool>& visited) {
+void bfs(vector<list<int> >& graph, int startNode, vector<bool>& visited) {
     queue<int> searchQueue;
 
     visited[startNode] = true;
@@ -28,42 +29,42 @@ void bfs(vector<vector<int> >& adjList, int startNode, vector<bool>& visited) {
 
         cout << currentNode << " ";
 
-        for (int neighbor : adjList[currentNode]) {
+        for (int neighbor : graph[currentNode]) {
             if (!visited[neighbor]) {
-                visited[neighbor] = true;
                 searchQueue.push(neighbor);
+                visited[neighbor] = true;
             }
         }
     }
 }
 
 /* */
-void addEdge(vector<vector<int> >& adjList, int u, int v) {
-    adjList[u].push_back(v);
-    adjList[v].push_back(u);
+void addEdge(vector<list<int> >& graph, int a, int b) {
+    graph[a].push_back(b);
+    graph[b].push_back(a); /* For undirected graphs */
 }
 
 int main() {
     int vertices = 11;
     int startNode = 0;
 
-    vector<vector<int> > adjList(vertices);
+    vector<list<int> > graph(vertices);
 
-    addEdge (adjList, 0, 1);
-    addEdge (adjList, 0, 2);
-    addEdge (adjList, 1, 7);
-    addEdge (adjList, 1, 8);
-    addEdge (adjList, 2, 3);
-    addEdge (adjList, 2, 5);
-    addEdge (adjList, 3, 5);
-    addEdge (adjList, 3, 6);
-    addEdge (adjList, 3, 9);
-    addEdge (adjList, 7, 8);
-    addEdge (adjList, 7, 10);
+    addEdge (graph, 0, 1);
+    addEdge (graph, 0, 2);
+    addEdge (graph, 1, 7);
+    addEdge (graph, 1, 8);
+    addEdge (graph, 2, 3);
+    addEdge (graph, 2, 5);
+    addEdge (graph, 3, 5);
+    addEdge (graph, 3, 6);
+    addEdge (graph, 3, 9);
+    addEdge (graph, 7, 8);
+    addEdge (graph, 7, 10);
 
     vector<bool> visited(vertices, false);
 
-    bfs (adjList, startNode, visited);
+    bfs (graph, startNode, visited);
     cout << endl;
 
     return 0;
