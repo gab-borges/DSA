@@ -13,7 +13,7 @@
 #include <iostream>
 #include <vector>
 #include <list>
-#include <queue>
+#include <stack>
 using namespace std;
 
 /* */
@@ -24,6 +24,32 @@ void dfs(vector<list<int> >& graph, int node, vector<bool>& visited) {
 	for (int i : graph[node])
 		if (!visited[i])
 			dfs(graph, i, visited);
+}
+
+/* */
+void iterative_dfs(vector<list<int> >& graph, int startNode, vector<bool>& visited) {
+	stack<int> searchStack;
+
+	searchStack.push(startNode);
+
+	while (!searchStack.empty()) {
+		int currentNode = searchStack.top();
+		searchStack.pop();
+		
+		/* The stack might have repeated elements, so
+		 * a check is necessary.
+		*/
+		if (!visited[currentNode]) {
+			cout << currentNode << " ";
+			visited[currentNode] = true;
+		}
+
+		for (int neighbor : graph[currentNode]) {
+			if (!visited[neighbor]) {
+				searchStack.push(neighbor);
+			}
+		}
+	}
 }
 
 /* */
@@ -46,13 +72,18 @@ int main() {
     addEdge (graph, 2, 5);
     addEdge (graph, 3, 5);
     addEdge (graph, 3, 6);
-    addEdge (graph, 3, 9);
+    addEdge (graph, 6, 9);
     addEdge (graph, 7, 8);
     addEdge (graph, 7, 10);
 
     vector<bool> visited(vertices, false);
 
     dfs (graph, startNode, visited);
+    cout << endl;
+
+    fill (visited.begin(), visited.end(), false);
+
+    iterative_dfs (graph, startNode, visited);
     cout << endl;
 
     return 0;
