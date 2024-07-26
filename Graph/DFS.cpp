@@ -1,14 +1,14 @@
-
-/*  * Depth-First Search
-    *
-    * V = vertices and E = edges:
-    * Time: O(V + E)
-    * Space: O(V)
-    *
-    *
-    * This implementation uses the adjacency list
-    * representation of graphs.
-*/
+/* 
+ * Depth-First Search (DFS)
+ *
+ * V = vertices and E = edges:
+ * Time: O(V + E)
+ * Space: O(V)
+ *
+ * This implementation uses the adjacency list
+ * representation of graphs.
+ *
+ */
 
 #include <iostream>
 #include <vector>
