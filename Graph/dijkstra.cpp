@@ -6,7 +6,7 @@
  * Dijkstra's algorithm has many useful applications.
  * It works on both directed and undirected graphs.
  *
- * Time: O(E * log V)
+ * Time: O((V + E) * log V)
  * Space: O(V)
  *
  * The following implementation uses adjacency list representation and a priority queue to 
