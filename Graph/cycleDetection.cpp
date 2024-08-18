@@ -12,15 +12,15 @@ using namespace std;
 
 /* Using DFS for directed graphs */
 bool detectCycleDFS (vector<vector<int>>& graph, int node, vector<bool>& visited, vector<int>& recStack) {
-    visited[node] = true;
-    recStack[node] = true;
+	visited[node] = true;
+	recStack[node] = true;
 
 	for (int i : graph[node]) {
 		if (!visited[i] && detectCycleDFS(graph, i, visited, recStack))
-            return true;
+			return true;
     
-        else if (recStack[i])
-            return true;
+	else if (recStack[i])
+		return true;
     }
 
     recStack[node] = false;
