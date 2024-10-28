@@ -6,42 +6,70 @@
 
 using std::cout;
 using std::endl;
-using std::unique_ptr;
 
-class Node {
+/* Template class of a node */
+template <typename T> class Node {
 public:
-    char info;
+    T info;
+    Node* left;
+    Node* right;
     int height;
-    unique_ptr<Node> left;
-    unique_ptr<Node> right;
 
-    /* Methods */
-    Node(char value) : info(value), height(1), left(nullptr), right(nullptr) {}
-    
-    void print() const; // In-Order Print
+    /* Constructor that receives a value */
+    Node(T value)
+        : info(value)
+        , left(nullptr)
+        , right(nullptr)
+        , height(1)
+    {
+    }
 };
 
-class Tree {
-private:
-    unique_ptr<Node> root;
+/* Template class of an AVL Tree */
+template <typename T> class Tree {
+public:
+    Node<T>* root;
 
-    int getHeight(const unique_ptr<Node>& node) const; //WTF
+    int height (Node<T>* node);
+    int balanceFactor (Node<T>* node);
+    void update_height (Node<T>* node);
 
     /* Rotations */
-    unique_ptr<Node> simple_left(unique_ptr<Node> node);
-    unique_ptr<Node> simple_right(unique_ptr<Node> node);
-    unique_ptr<Node> double_left(unique_ptr<Node> node);
-    unique_ptr<Node> double_right(unique_ptr<Node> node);
+    Node<T>* simple_left (Node<T>* node);
+    Node<T>* simple_right (Node<T>* node);
+    Node<T>* double_left (Node<T>* node);
+    Node<T>* double_right (Node<T>* node);
 
     /* Update the Balance Factor and Height */
-    unique_ptr<Node> update_bf_left(unique_ptr<Node> node);
-    unique_ptr<Node> update_bf_right(unique_ptr<Node> node);
-    void update_height(Node& node); //WTF
+    Node<T>* update_bf_left (Node<T>* node);
+    Node<T>* update_bf_right (Node<T>* node);
+
+    Node<T>* insertNode (Node<T>* node, T value);
+    Node<T>* removeNode (Node<T>* node, T target);
+
+    bool searchNode (Node<T>* node, T value);
+
+    /* In-Order traversal */
+    void inOrder(Node<T>* node);
 
 public:
-    void insert (char value);
-    void remove (char value);
-    int balance(const unique_ptr<Node>& node) const; //WTF
+    Tree()
+        : root(nullptr)
+    {
+    }
+
+    /* __ Interface __ */
+    /* Inserts a value into the tree */
+    void insert (T value);
+    
+    /* Removes a value from the tree */
+    void remove (T target);
+
+    /* Searches for a value in the tree */
+    bool search (T value);
+    
+    /* Prints the In-Order traversal of the tree */
+    void print();
 };
 
 #endif

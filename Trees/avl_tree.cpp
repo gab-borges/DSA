@@ -1,155 +1,216 @@
 #include "avl_tree.hpp"
 
-int Tree::getHeight(const unique_ptr<Node>& node) const {
+template <typename T>
+int Tree<T>::height(Node<T>* node) {
     return (node ? node->height : -1);
 }
 
-int Tree::balance(const unique_ptr<Node>& node) const {
-    return getHeight(node->right) - getHeight(node->left);
+template <typename T>
+int Tree<T>::balanceFactor(Node<T>* node) {
+    return (height(node->right) - height(node->left));
 }
 
-void Tree::update_height() {
-    height = std::max(getHeight(node->left), getHeight(node->right)) + 1;
+template <typename T>
+void Tree<T>::update_height(Node<T>* node) {
+    node->height = std::max(height(node->left), height(node->right)) + 1;
 }
 
-void Node::print() {
-    cout << info << endl;
-    
-    if (left != nullptr)
-        left->print();
-
-    if (right != nullptr)
-        right->print();
-}
-
-Tree* Tree::simple_left() {
-    Tree* aux = right;
-    right = aux->left;
-    aux->left = this;
+template <typename T>
+Node<T>* Tree<T>::simple_left(Node<T>* node) {
+    Node<T>* aux = node->right;
+    node->right = aux->left;
+    aux->left = node;
 
     return aux;
 }
 
-Tree* Tree::simple_right() {
-    Tree* aux = left;
-    left = aux->right;
-    aux->right = this;
+template <typename T>
+Node<T>* Tree<T>::simple_right(Node<T>* node) {
+    Node<T>* aux = node->left;
+    node->left = aux->right;
+    aux->right = node;
 
     return aux;
 }
 
-Tree* Tree::double_left() {
-    right = right->simple_right();
+template <typename T>
+Node<T>* Tree<T>::double_left(Node<T>* node) {
+    node->right = simple_right(node->right);
 
-    return simple_left();
+    return simple_left(node);
 }
 
-Tree* Tree::double_right() {
-    left = left->simple_left();
+template <typename T>
+Node<T>* Tree<T>::double_right(Node<T>* node) {
+    node->left = simple_left(node->left);
 
-    return simple_right();
+    return simple_right(node);
 }
 
-Tree* Tree::update_bf_left() {
-    this->update_height();
+template <typename T>
+Node<T>* Tree<T>::update_bf_left(Node<T>* node) {
+    update_height(node);
 
-    if (this->balance() == -2) {
-        if (left->balance() <= 0)
-            this = this->simple_right();
+    if (balanceFactor(node) == -2) {
+        if (balanceFactor(node->left) <= 0)
+            node = simple_right(node);
 
         else
-            this = this->double_right();
+            node = double_right(node);
     }
 
-    return this;
+    return node;
 }
 
-Tree* Tree::update_bf_right() {
-    this->update_height();
+template <typename T>
+Node<T>* Tree<T>::update_bf_right(Node<T>* node) {
+    update_height(node);
 
-    if (this->balance() == 2) {
-        if (right->balance() >= 0)
-            this = this->simple_left();
+    if (balanceFactor(node) == 2) {
+        if (balanceFactor(node->right) >= 0)
+            node = simple_left(node);
 
         else
-            this = this->double_left();
+            node = double_left(node);
     }
 
-    return this;
+    return node;
 }
 
-Tree* Tree::insert(char newData) {
-    if (newData > info) {
-        /* Checks if right is a nullptr and allocs memory if so */
-        right = right ? right->insert(newData) : new Tree(newData);
+template <typename T>
+Node<T>* Tree<T>::insertNode(Node<T>* node, T value) {
+    if (node == nullptr) {
+        node = new Node<T>(value);
+    }
+
+    else if (value > node->info) {
+        /* If value is greater than the current node, then it's at its right */
+        node->right = insertNode(node->right, value);
 
         /* Updates the balance factor to selfbalance the tree */
-        this = this->update_bf_right();
-
-        return right;
+        node = update_bf_right(node);
     }
 
     else {
         /* Checks if right is a nullptr and allocs memory if so */
-        left = left ? left->insert(newData) : new Tree(newData);
+        node->left = insertNode(node->left, value);
 
         /* Updates the balance factor to selfbalance the tree */
-        this = this->update_bf_left();
-
-        return left;
+        node = update_bf_left(node);
     }
+
+    return node;
 }
 
-Tree* Tree::remove(char target) {
-    if (info < target) {
-        left = left->remove(target);
+template <typename T>
+void Tree<T>::insert(T value) {
+    root = insertNode(root, value);
+}
 
-        this = this->update_bf_left();
-    }
-
-    else if (target < info) {
-        right = right->remove(target);
-        
-        this = this->update_bf_right();
-    }
+template <typename T>
+Node<T>* Tree<T>::removeNode(Node<T>* node, T target) {
+    if (node == nullptr)
+        return nullptr;
 
     else {
-        if (left == nullptr && right == nullptr) {
-            delete this;
-            this = nullptr;
+        if (node->info > target) {
+            node->left = removeNode(node->left, target);
+
+            node = update_bf_left(node);
         }
 
-        else if (left == nullptr) {
-            Tree* aux = this;
-            this = right;
-            delete aux;
-        }
-
-        else if (right == nullptr) {
-            Tree* aux = this;
-            this = left;
-            delete aux;
+        else if (target > node->info) {
+            node->right = removeNode(node->right, target);
+            
+            node = update_bf_right(node);
         }
 
         else {
-            Tree* aux = left;
+            if (node->left == nullptr && node->right == nullptr) {
+                delete node;
+                node = nullptr;
+            }
 
-            while (aux->right)
-                aux = aux->right;
-            
-            this->info = aux->info;
-            left = left->remove(aux->info);
-            this = this->update_bf_left();
+            else if (node->left == nullptr) {
+                Node<T>* aux = node;
+                node = node->right;
+                delete aux;
+            }
+
+            else if (node->right == nullptr) {
+                Node<T>* aux = node;
+                node = node->left;
+                delete aux;
+            }
+
+            else {
+                Node<T>* aux = node->left;
+
+                while (aux->right != nullptr)
+                    aux = aux->right;
+
+                node->info = aux->info;
+                node->left = removeNode(node->left, aux->info);
+                node = update_bf_left(node);
+            }
         }
-
-        return this;
+    return node;
     }
+}
 
-    return this;
+template <typename T>
+void Tree<T>::remove(T target) {
+    root = removeNode (root, target);
+}
+
+template <typename T>
+bool Tree<T>::searchNode(Node<T>* node, T value) {
+    if (node == nullptr)
+        return false;
+
+    if (node->info > value)
+        return searchNode(node->right, value);
+
+    if (node->info < value)
+        return searchNode(node->left, value);
+    
+    return true;
+}
+
+template <typename T>
+bool Tree<T>::search(T value) {
+    return searchNode (root, value);
+}
+
+template <typename T>
+void Tree<T>::inOrder(Node<T>* node) {
+    if (node == nullptr)
+        return;
+
+    inOrder (node->left);
+
+    cout << node->info << " ";
+
+    inOrder (node->right);
+}
+
+template <typename T>
+void Tree<T>::print() {
+    inOrder (root);
+
+    cout << endl;
 }
 
 int main() {
-    cout << "Hello World" << endl;
+    Tree<char> tree;
+
+    tree.insert('A');
+    tree.insert('C');
+    tree.insert('D');
+    tree.insert('E');
+    tree.insert('B');
+
+    tree.print();
 
     return 0;
 }
